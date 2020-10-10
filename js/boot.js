@@ -1,5 +1,5 @@
 var canvasTexture;
-var showTextures = true;
+var showTextures = false;
 var showShadows = true;
 var showLighting = true;
 var arrowRight;
@@ -13,7 +13,6 @@ var mapArray = [];
 var barrel;
 var player;
 var dot = [];
-var walls = [];
 var lastLoop = new Date();
 var wallImage;
 var bmd;
