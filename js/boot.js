@@ -17,7 +17,7 @@ var walls = [];
 var lastLoop = new Date();
 var wallImage;
 var bmd;
-var mapLength = 25;
+var mapHeight = 25;
 var mapWidth = 25;
 var maze = [];
 //CONSTANTS
