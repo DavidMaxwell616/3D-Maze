@@ -1,5 +1,5 @@
 var canvasTexture;
-var showTextures = false;
+var showTextures = true;
 var showShadows = true;
 var showLighting = true;
 var arrowRight;
@@ -20,20 +20,23 @@ var mapHeight = 25;
 var mapWidth = 25;
 var maze = [];
 //CONSTANTS
-var mapBlockSize = 5, // Size of walls on the mini map
+const mapBlockSize = 5, // Size of walls on the mini map
   wallSize = 64, // Size of walls in the game world
   fieldOfView = 66, // Field of view of the player (in degrees)
-  screenWidth = 640, // Width of the viewport
-  screenHeight = 320, // Height of the viewport
+  screenWidth =800, // Width of the viewport
+  screenHeight = 400, // Height of the viewport
   angleBetweenRays = parseFloat(66 / 640), // Angle between casted rays
   movementStep = 3, // How much the player moves each step 10
   turningStep = 2, // How fast the player turns 2.5
-  distanceToViewport = 0,
   sprite = null,
   images = [],
   sprites3d = [];
+  const mapOffsetX = 670,
+    mapOffsetY = 0;
 
-var textureMap = {
+ const distanceToViewport = Math.round(screenWidth / 2 / Math.tan(fieldOfView / 2 * (Math.PI / 180)));
+ 
+const textureMap = {
   1: 'redbrick',
   2: 'bluestone',
   3: 'stone1',
@@ -42,4 +45,9 @@ var textureMap = {
   6: 'purplestone',
   7: 'wood',
   8: 'mossy'
+};
+
+const centerOfScreen = {
+  x: screenWidth / 2,
+  y: screenHeight / 2
 };

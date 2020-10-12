@@ -1,4 +1,4 @@
-var game = new Phaser.Game(640, 420, Phaser.CANVAS, 'container', {
+var game = new Phaser.Game(800, 500, Phaser.CANVAS, 'container', {
   preload: preload,
   create: create,
   update: update
@@ -6,7 +6,7 @@ var game = new Phaser.Game(640, 420, Phaser.CANVAS, 'container', {
 
 function create() {
   game.physics.startSystem(Phaser.Physics.ARCADE);
-  bmd = game.add.bitmapData(640, 320);
+  bmd = game.add.bitmapData(800, 500);
   game.add.sprite(0, 0, bmd);
   
   mapArray = makemaze(1,1,mapWidth,mapHeight,1);
@@ -22,8 +22,7 @@ function create() {
   //context = texture.getContext(); //canvas.context;
 
   //graphics = this.add.graphics();
-  distanceToViewport = Math.round(screenWidth / 2 / Math.tan(fieldOfView / 2 * (Math.PI / 180)));
-  arrows(this);
+   arrows(this);
 
   // debug.innerHTML= text ;
   //  for (var y = 0; y < mapArray.length; y++) {
@@ -77,14 +76,9 @@ var player = {
   angle: new angle(290)
 };
 
-var centerOfScreen = {
-  x: screenWidth / 2,
-  y: screenHeight / 2
-};
-
 
 // Reference to the canvas context
-var context = null,
+  context = null,
   gameloopInterval = null,
   redrawScreen = true,
   // Array with Image objects containing the textures
@@ -319,14 +313,10 @@ function drawMiniMap() {
   // Map is smaller than world, determine shrink factor
   var shrinkFactor = parseFloat(wallSize / mapBlockSize);
 
-  var mapOffsetX = 520,
-    mapOffsetY = 200;
-
-  // Draw white background
+  // Draw black background
   drawing.rectangle(mapOffsetX, mapOffsetY,
     mapArray[0].length * mapBlockSize, mapArray.length * mapBlockSize,
-    0xffffff);
-
+    'black');
   // Draw walls
   for (var y = 0; y < mapArray.length; y++) {
 
@@ -339,7 +329,7 @@ function drawMiniMap() {
             dot[y][x].height = mapBlockSize; */
         drawing.rectangle(mapOffsetX + x * mapBlockSize, mapOffsetY + y * mapBlockSize,
           mapBlockSize, mapBlockSize,
-          0xffffff);
+          'gray');
       }
     }
   }
@@ -349,7 +339,7 @@ function drawMiniMap() {
     playerY = mapOffsetY + Math.floor(player.y / shrinkFactor);
   //  playerSprite.x = playerX-4;
   //  playerSprite.y = playerY-4;
-  drawing.circle(playerX, playerY, mapBlockSize / 2, 0xffffff);
+  drawing.circle(playerX, playerY, mapBlockSize / 2, 'green');
 
   // Visualize the raycasting
   // var miniWallAngle = new angle(player.angle.getValue() + fieldOfView / 2);
@@ -457,9 +447,8 @@ var drawWorld = function () {
       if (offsetY >= wallSize / 2) {
         offsetY = wallSize / 2 - 1;
       }
-
       var rect = new Phaser.Rectangle(wall.textureX, offsetY, 1, wallSize - offsetY * 2);
-      bmd.copyPixels2(textureMap[wall.textureIndex], rect, i, scanlineStartY, 1, scanlineEndY - scanlineStartY);
+      copyPixels2(textureMap[wall.textureIndex], rect, i, scanlineStartY, 1, scanlineEndY - scanlineStartY);
 
     } else {
       // Draw without textures
@@ -490,6 +479,11 @@ var drawWorld = function () {
   }
 };
 
+function copyPixels2(a,b,c,d,e,f)
+{
+  "string"==typeof a&&(a=game.cache.getImage(a)),a&&
+  context.drawImage(a,b.x,b.y,b.width,b.height,c,d,e,f);
+}
 // Draw 3D representation of a sprite
 var drawSprite = function () {
   drawing.clear();
@@ -538,7 +532,7 @@ var drawSprite = function () {
 
 
       var rect = new Phaser.Rectangle(wall.textureX, offsetY, 1, wallSize - offsetY * 2);
-      bmd.copyPixels2(textureMap[wall.textureIndex], rect, i, scanlineStartY, 1, scanlineEndY - scanlineStartY);
+      copyPixels2(textureMap[wall.textureIndex], rect, i, scanlineStartY, 1, scanlineEndY - scanlineStartY);
 
     } else {
       // Draw without textures
@@ -623,7 +617,7 @@ var movement = function () {
 
 function arrows(game) {
 
-  arrowRight = game.add.button(72, 355, 'arrowRight');
+  arrowRight = game.add.button(72, 435, 'arrowRight');
   arrowRight.fixedToCamera = true;
   arrowRight.events.onInputDown.add(function () {
     right = true;
@@ -632,7 +626,7 @@ function arrows(game) {
     right = false;
   });
 
-  arrowLeft = game.add.button(5, 355, 'arrowRight');
+  arrowLeft = game.add.button(5, 435, 'arrowRight');
   arrowLeft.fixedToCamera = true;
   arrowLeft.anchor.setTo(1, 1);
   arrowLeft.angle = 180;
@@ -643,7 +637,7 @@ function arrows(game) {
     left = false;
   });
 
-  arrowUp = game.add.button(70, 320, 'arrowRight');
+  arrowUp = game.add.button(70, 400, 'arrowRight');
   arrowUp.fixedToCamera = true;
   arrowUp.anchor.setTo(1, 1);
   arrowUp.angle = 270;
@@ -654,7 +648,7 @@ function arrows(game) {
     up = false;
   });
 
-  arrowDown = game.add.button(38, 420, 'arrowRight');
+  arrowDown = game.add.button(38, 500, 'arrowRight');
   arrowDown.fixedToCamera = true;
   arrowDown.anchor.setTo(1, 1);
   arrowDown.angle = 90;
