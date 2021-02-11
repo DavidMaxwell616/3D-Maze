@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Maze Test</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/2.6.0/phaser.min.js"></script>
+    </head>
+    <body>
+
+
+<script>
+var game = new Phaser.Game(800, 500, Phaser.CANVAS, 'container', {
+  create: create,
+});
+var bmd;
+function create(){
+  game.stage.backgroundColor = "#0c9fc7";
+       bmd = game.add.bitmapData(800, 500);
+      bmd.addToWorld();
+  
+  drawRectangle(0,250,800,250,0x000000, 0x787878);
+
+}
+function drawRectangle(x,y,w,h,c1,c2){      
+  for (var i = 0; i < h/2; i++)
+    {
+        var c = Phaser.Color.interpolateColor(0x000000, 0x787878, h/2, i);
+
+        // console.log(Phaser.Color.getWebRGB(c));
+
+        bmd.rect(x, y, w, y+2, Phaser.Color.getWebRGB(c));
+
+     
+        y += 2;
+    }
+    }
+    </script>
+    </body>
+ </html>

@@ -341,72 +341,27 @@ function drawMiniMap() {
   //  playerSprite.y = playerY-4;
   drawing.circle(playerX, playerY, mapBlockSize / 2, 'green');
 
-  // Visualize the raycasting
-  // var miniWallAngle = new angle(player.angle.getValue() + fieldOfView / 2);
-  // for (var i = 0; i < scre   enWidth; i++) {
-  //   var wall = raycasting.findWall(miniWallAngle),
-  //     deltaX = Math.floor(Math.cos(miniWallAngle.toRadians()) * (wall.distance / shrinkFactor)),
-  //     deltaY = Math.floor(Math.sin(miniWallAngle.toRadians()) * (wall.distance / shrinkFactor));
+  //Visualize the raycasting
+  var miniWallAngle = new angle(player.angle.getValue() + fieldOfView / 2);
+  for (var i = 0; i < screenWidth; i++) {
+    var wall = raycasting.findWall(miniWallAngle),
+      deltaX = Math.floor(Math.cos(miniWallAngle.toRadians()) * (wall.distance / shrinkFactor)),
+      deltaY = Math.floor(Math.sin(miniWallAngle.toRadians()) * (wall.distance / shrinkFactor));
 
-  //   drawing.line(playerX, playerY,
-  //     playerX + deltaX, playerY - deltaY, 0xffffff);
+    drawing.line(playerX, playerY,
+      playerX + deltaX, playerY - deltaY, 0xffffff);
 
-  //   miniWallAngle.turn(-angleBetweenRays);
-  // }
-
-};
-
-// Basic drawing functions
-var drawing = {
-  // Clear the screen
-  clear: function () {
-    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-  },
-  // Get rgb() color string
-  colorRgb: function (r, g, b) {
-    return "rgb(" + r + ", " + g + ", " + b + ")";
-  },
-  // Get rgba() color string
-  colorRgba: function (r, g, b, a) {
-    return "rgba(" + r + ", " + g + ", " + b + ", " + a + ")";
-  },
-  // Draws a circle
-  circle: function (x, y, radius, color) {
-    context.beginPath();
-    context.fillStyle = color;
-    context.arc(x, y, radius, 0, Math.PI * 2, true);
-    context.fill();
-    context.closePath();
-  },
-  // Draws a rectangle
-  rectangle: function (x, y, width, height, color) {
-    context.beginPath();
-    context.fillStyle = color;
-    context.fillRect(x, y, width, height);
-    context.closePath();
-  },
-  // Draws a line
-  // Note: for some reason lineTo() and stroke() result in a semi-transparent line
-  // If you want to be sure the line is of solid color, use lineRectangle() instead
-  line: function (x, y, x2, y2, color) {
-    context.beginPath();
-    context.moveTo(x, y);
-    context.lineTo(x2, y2);
-    context.strokeStyle = color;
-    context.stroke();
-    context.closePath();
-  },
-  lineRectangle: function (x, y, x2, y2, color) {
-    drawing.rectangle(x, y, 1, y2 - y, color);
+    miniWallAngle.turn(-angleBetweenRays);
   }
+
 };
 
 // Draw 3D representation of the world
 var drawWorld = function () {
   drawing.clear();
-  drawing.rectangle(0, 0, screenWidth, screenHeight / 2, drawing.colorRgb(60, 60, 60));
-  drawing.rectangle(0, screenHeight / 2, screenWidth, screenHeight / 2, drawing.colorRgb(120, 120, 120));
-
+  drawing.verticalGradientRectangle(0,0,screenWidth,screenHeight/2,0x0c9fc7,0xffffff );
+  drawing.verticalGradientRectangle(0,screenHeight/2,screenWidth,screenHeight/2,0x000000, 0x787878);
+  
   var wallAngle = new angle(player.angle.getValue() + fieldOfView / 2);
   // Draw vertical scanlines for each 1px of the screen
   for (var i = 0; i < screenWidth; i++) {
@@ -617,8 +572,9 @@ var movement = function () {
 
 function arrows(game) {
 
-  arrowRight = game.add.button(72, 435, 'arrowRight');
+  arrowRight = game.add.button(screenWidth-60, 435, 'arrowRight');
   arrowRight.fixedToCamera = true;
+  arrowRight.scale.setTo(2);
   arrowRight.events.onInputDown.add(function () {
     right = true;
   });
@@ -626,9 +582,10 @@ function arrows(game) {
     right = false;
   });
 
-  arrowLeft = game.add.button(5, 435, 'arrowRight');
+  arrowLeft = game.add.button(arrowRight.x-100, 435, 'arrowRight');
   arrowLeft.fixedToCamera = true;
   arrowLeft.anchor.setTo(1, 1);
+  arrowLeft.scale.setTo(2);
   arrowLeft.angle = 180;
   arrowLeft.events.onInputDown.add(function () {
     left = true;
@@ -637,9 +594,10 @@ function arrows(game) {
     left = false;
   });
 
-  arrowUp = game.add.button(70, 400, 'arrowRight');
+  arrowUp = game.add.button(65, 350, 'arrowRight');
   arrowUp.fixedToCamera = true;
   arrowUp.anchor.setTo(1, 1);
+  arrowUp.scale.setTo(2);
   arrowUp.angle = 270;
   arrowUp.events.onInputDown.add(function () {
     up = true;
@@ -648,9 +606,10 @@ function arrows(game) {
     up = false;
   });
 
-  arrowDown = game.add.button(38, 500, 'arrowRight');
+  arrowDown = game.add.button(0, 500, 'arrowRight');
   arrowDown.fixedToCamera = true;
   arrowDown.anchor.setTo(1, 1);
+  arrowDown.scale.setTo(2);
   arrowDown.angle = 90;
   arrowDown.events.onInputDown.add(function () {
     down = true;
