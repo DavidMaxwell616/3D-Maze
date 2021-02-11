@@ -44,7 +44,8 @@ const textureMap = {
   5: 'stone3',
   6: 'purplestone',
   7: 'wood',
-  8: 'mossy'
+  8: 'mossy',
+  9: 'exit'
 };
 
 const centerOfScreen = {

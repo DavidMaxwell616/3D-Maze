@@ -71,8 +71,8 @@ function update() {
 
 // Defines player values
 var player = {
-  x: 200,
-  y: 200,
+  x: 100,
+  y: 100,
   angle: new angle(290)
 };
 
@@ -342,17 +342,17 @@ function drawMiniMap() {
   drawing.circle(playerX, playerY, mapBlockSize / 2, 'green');
 
   //Visualize the raycasting
-  var miniWallAngle = new angle(player.angle.getValue() + fieldOfView / 2);
-  for (var i = 0; i < screenWidth; i++) {
-    var wall = raycasting.findWall(miniWallAngle),
-      deltaX = Math.floor(Math.cos(miniWallAngle.toRadians()) * (wall.distance / shrinkFactor)),
-      deltaY = Math.floor(Math.sin(miniWallAngle.toRadians()) * (wall.distance / shrinkFactor));
+  // var miniWallAngle = new angle(player.angle.getValue() + fieldOfView / 2);
+  // for (var i = 0; i < screenWidth; i++) {
+  //   var wall = raycasting.findWall(miniWallAngle),
+  //     deltaX = Math.floor(Math.cos(miniWallAngle.toRadians()) * (wall.distance / shrinkFactor)),
+  //     deltaY = Math.floor(Math.sin(miniWallAngle.toRadians()) * (wall.distance / shrinkFactor));
 
-    drawing.line(playerX, playerY,
-      playerX + deltaX, playerY - deltaY, 0xffffff);
+  //   drawing.line(playerX, playerY,
+  //     playerX + deltaX, playerY - deltaY, 0xffffff);
 
-    miniWallAngle.turn(-angleBetweenRays);
-  }
+  //   miniWallAngle.turn(-angleBetweenRays);
+  // }
 
 };
 

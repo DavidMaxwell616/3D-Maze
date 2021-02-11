@@ -14,6 +14,7 @@ var height;
 var tmpMap = [];
 
 function makemaze(y, x,w,h, scale) {
+
 var array = [];
 width = w;
 height = h;
@@ -30,8 +31,8 @@ for (var y = 0; y < h; y++) {
   } 
  
   buildmaze(1, 1,1);
-  tmpMap[0][1] = 0;
-  tmpMap[w - 1][h - 2] = 0;
+  tmpMap[0][1] = 1;
+  tmpMap[w - 1][h - 2] = 9;
     return tmpMap;
 }
 
